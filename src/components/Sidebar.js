@@ -1,6 +1,5 @@
 import React from 'react';
 import "../App.css";
-import {SidebarData} from './SidebarData';
 import SideBarItem from './SideBarItem';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
@@ -8,60 +7,63 @@ import ClassIcon from '@mui/icons-material/Class';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from "react-router-dom";
+import Logout from '@mui/icons-material/Logout';
 
-function Sidebar() {
+function Sidebar({ setToken }) {
 
-    const ITEMS =  [{
-        title:"Home",
+    const ITEMS = [{
+        title: "Home",
         icon: <HomeIcon />,
-        link: "/home" ,
+        link: "/",
     },
 
     {
-        title:"Profile",
+        title: "Profile",
         icon: <PersonIcon />,
         link: "/profile",
     },
 
     {
-        title:"Cours",
+        title: "Cours",
         icon: <ClassIcon />,
-        link: "/courses" ,
+        link: "/courses",
     },
 
     {
-        title:"Emplois",
+        title: "Emplois",
         icon: <EventNoteIcon />,
-        link: "/timetables" ,
+        link: "/timetables",
     },
 
-    // {
-    //     title:"Log out",
-    //     icon: <LogoutIcon />,
-    //     link:  ,
-    // }
 
-]
+    ]
 
+    const logout = () => {
+        sessionStorage.clear();
+        setToken("");
+    }
 
     return (
         <div className="Sidebar">
             <div className="SidebarList">
                 {
-                    ITEMS.map((el)=>{
-                        return(
+                    ITEMS.map((el) => {
+
+                        return (
                             <Link to={el.link}>
                                 <SideBarItem title={el.title} icon={el.icon} />
-                            </Link> 
-                            )
-                    })
+                            </Link>
+                        )
+                    }
+                    )
                 }
+                <SideBarItem title={"Log out"} icon={<LogoutIcon />} onClick={logout} />
             </div>
         </div>
     )
 
 
-               
+
 }
 
 export default Sidebar

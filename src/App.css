@@ -1,23 +1,23 @@
-.App{
-    width: 100vw;
-    height: 100vh;
+* {
+    margin: 0;
+    padding: 0;
+
 }
 
+
 /*navbar*/
-.Sidebar{
+.Sidebar {
     width: 300px;
-    height: 650px;
+    min-height: 650px;
     background-color: #323F52;
-    margin-top: 20px;
-    margin-left: 25px;
     border-radius: 20px;
 }
 
-.SidebarList{
+.SidebarList {
     height: auto;
     padding: 0;
     width: 100%;
-    
+
 }
 
 .SidebarList .row {
@@ -37,52 +37,59 @@
 .SidebarList .row:hover {
     cursor: pointer;
     background-color: #2C3745;
+    border-radius: 20px;
+
 }
 
 .SidebarList #active {
     background-color: #2C3745;
 }
 
-.row #icon{
+.row #icon {
     flex: 40%;
     display: grid;
     place-items: center;
-    
+
 }
 
-.row #title{
+.row #title {
     flex: 60%;
-    
+
 }
 
 /*home*/
 .home {
-    margin-left: 360px;
-    margin-top: -650px;
+    padding-top: 1rem;
     border-radius: 20px;
-    background-color: #323F52;
-    width: 70%;
-    height: 650px;
-} 
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    margin-inline: 25px;
+
+}
 
 .home .data {
+    background-color: #323F52;
+    min-height: 620px;
+    padding: 1rem;
+    margin-left: 1rem;
+    border-radius: 20px;
     width: 100%;
-    height: 60px;
-    margin: 0%;
-    display: flex;
     color: honeydew;
-    align-items: center;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
-.home #Dicon{
-    margin-top: 81px;
-    display: grid;
-    margin-left: 60px;
+
+.home .page-header {
+    display: flex;
+    align-content: center;
+    /* justify-content: center; */
+    align-items: center;
 }
 
-.home #txt{
+
+/* .home #txt {
     margin-top: 100px;
-    margin-left: 15px; 
+    margin-left: 15px;
 }
 
 .box {
@@ -107,5 +114,69 @@
 .txt1 {
     margin-left: 110px;
     margin-top: 60px;
-    
+
+} */
+
+
+
+
+input#loginbtn {
+    appearance: none;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+
+form#login {
+    display: block;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    background-image: linear-gradient(to bottom right, #89CFF0, #FF5733);
+    min-height: 80vh;
+    padding-top: 5rem;
+}
+
+/* form:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    z-index: 1;
+    background-image: linear-gradient(to bottom right, #89CFF0, #FF5733);
+} */
+
+form .form-inner {
+    position: relative;
+    display: block;
+    background-color: #ffff;
+    padding: 100px;
+    z-index: 2;
+    height: 30%;
+
+}
+
+form .form-inner h2 {
+    color: #888;
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+form .form-inner .form-group {
+    display: block;
+    width: 300px;
+    margin-bottom: 15px;
+}
+
+.form-inner .form-group label {
+    display: block;
+    color: #666;
+    font-size: 12px;
+    margin-bottom: 5px;
+    transition: 0.4s;
 }
