@@ -9,7 +9,7 @@ const WelcomeScreen = ({ Loggeduser }) => {
         <div className="data welcome">
             <div className="page-header">
                 <DashboardIcon id="Dicon" />
-                <h2 id="txt"> {`Welcome ${user.username} `} </h2>
+                <h2 id="txt"> {`Welcome ${user?.username} `} </h2>
             </div>
 
             {

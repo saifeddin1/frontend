@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import "../App.css";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { useNavigate } from 'react-router-dom';
+import ImgMediaCard from './ImgMediaCard';
+import { display } from '@mui/system';
+import { IconButton, Input } from '@mui/material';
 
 
 const Courses = () => {
@@ -124,34 +127,34 @@ const Courses = () => {
                 <h2 id="txt">Courses </h2>
             </div>
 
-            <h2>This is your courses</h2>
-            {isLoading && <p>Loading...</p>}
-            {
-                courses?.length > 0 &&
-
-                courses.map((course) => {
-                    return (
-                        <>
-                            <br />
-                            <h3 key={course.id}>{course.title}</h3>
-                            <button onClick={() => deleteOne(course.id)}>delete</button>
-                            <br />
-                            <br />
-                        </>
-                    )
-                })
-
-                // :
-                // "loading"
-            }
-
-            <form onSubmit={submitForm}>
+            <form onSubmit={submitForm} class="addCourse">
                 <input type="text" name="title" value={course.title} onChange={handleChange} />
+                
                 <input type="file" name="content" onChange={handleFile} />
                 <input type="submit" />
             </form>
 
-        </div>
+            <h2>This is your courses</h2>
+            {isLoading && <p>Loading...</p>}
+            <section class="cards-wrapper" style={{ display: 'flex', flexWrap: 'wrap' }}>
+                {
+                    courses?.length > 0 &&
+
+                    courses.map((course) => {
+                        return (
+
+                            <ImgMediaCard course={course} deleteOne={deleteOne} />
+
+                        )
+                    })
+
+                    // :
+                    // "loading"
+                }
+            </section>
+
+
+        </div >
     )
 }
 

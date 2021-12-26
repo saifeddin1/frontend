@@ -84,6 +84,7 @@
     align-content: center;
     /* justify-content: center; */
     align-items: center;
+    margin-block: 1rem;
 }
 
 
@@ -127,6 +128,9 @@ input#loginbtn {
     outline: none;
 }
 
+form.addCourse {
+    margin-block: 1rem;
+}
 
 form#login {
     display: block;
@@ -179,4 +183,12 @@ form .form-inner .form-group {
     font-size: 12px;
     margin-bottom: 5px;
     transition: 0.4s;
+}
+
+#card {
+    border-radius: 15px;
+}
+
+.cards-wrapper {
+    margin-top: 1rem;
 }
