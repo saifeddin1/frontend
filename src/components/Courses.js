@@ -24,7 +24,6 @@ const Courses = () => {
     const navigate = useNavigate();
 
     const retrieve = async () => {
-        setIsLoading(true);
 
         try {
             const res = await fetch(BASE_URL, {
@@ -46,6 +45,7 @@ const Courses = () => {
     }
 
     useEffect(() => {
+        setIsLoading(true);
 
         if (token) {
             retrieve();
@@ -54,7 +54,7 @@ const Courses = () => {
         }
 
 
-    }, [token])
+    }, [])
 
 
 
@@ -88,13 +88,13 @@ const Courses = () => {
                 method: "POST",
                 body: data,
                 headers: {
-                    'Authorization': `Token ${token}`
+                    'Authorization': ` ${token}`
                 }
             }
         )
 
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(result => { console.clear(); console.log(result); retrieve(); })
             .catch(err => console.log(err))
 
 
@@ -129,7 +129,7 @@ const Courses = () => {
                 <DashboardIcon id="Dicon" />
                 <h2 id="txt">Courses </h2>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', marginBlock:'1rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', marginBlock: '1rem' }}>
 
                 <h3>Add Course</h3>&nbsp; &nbsp; <Button variant={'contained'} onClick={() => setIsHidden(!isHidden)}>
                     {isHidden ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
@@ -139,7 +139,7 @@ const Courses = () => {
                 isHidden ? "" :
                     <form onSubmit={submitForm} class="addCourse">
                         <input type="text" name="title" value={course.title} onChange={handleChange} />
-                        <input type="file" class="custom-file-input" name="content" onChange={handleFile} />
+                        <input type="file" accept="application/pdf" class="custom-file-input" name="content" onChange={handleFile} />
                         <Button variant="contained" type="submit">Add</Button>
                         {/* 
                 <input type="submit" /> */}
@@ -148,7 +148,7 @@ const Courses = () => {
 
             <h2>This is your courses</h2>
             {isLoading && <p>Loading...</p>}
-            <section class="cards-wrapper" style={{ display: 'flex', flexWrap: 'wrap' }}>
+            <section class="cards-wrapper" >
                 {
                     courses?.length > 0 &&
 

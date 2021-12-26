@@ -9,7 +9,7 @@ import Thumb from './course-thumb.png'
 
 export default function ImgMediaCard({ course, deleteOne }) {
     return (
-        <Card sx={{ maxWidth: 150, padding: 1, margin: "5px 20px", height: 170 }} id="card">
+        <Card sx={{ maxWidth: 150, padding: 1, margin: "15px 20px", height: 170 }} id="card">
             <CardMedia
                 component="img"
                 height="60"

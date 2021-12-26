@@ -70,7 +70,7 @@
 
 .home .data {
     background-color: #323F52;
-    min-height: 620px;
+    height: 620px;
     padding: 1rem;
     margin-left: 1rem;
     border-radius: 20px;
@@ -216,6 +216,11 @@ form .form-inner .form-group {
 
 .cards-wrapper {
     margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    max-height: 25rem;
 }
 
 .custom-file-input {
