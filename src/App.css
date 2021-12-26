@@ -36,8 +36,8 @@
 
 .SidebarList .row:hover {
     cursor: pointer;
-    background-color: #2C3745;
-    border-radius: 20px;
+    background-color: #fff;
+    color: #2C3745;
 
 }
 
@@ -205,6 +205,13 @@ form .form-inner .form-group {
 
 #card {
     border-radius: 15px;
+}
+
+#card p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
 }
 
 .cards-wrapper {
