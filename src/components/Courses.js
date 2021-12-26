@@ -4,7 +4,10 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import { useNavigate } from 'react-router-dom';
 import ImgMediaCard from './ImgMediaCard';
 import { display } from '@mui/system';
-import { IconButton, Input } from '@mui/material';
+import { Button, IconButton, Input } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+
 
 
 const Courses = () => {
@@ -14,7 +17,7 @@ const Courses = () => {
 
     const [course, setCourse] = useState({ content: null, title: "" })
     const [courses, setCourses] = useState()
-
+    const [isHidden, setIsHidden] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
     const BASE_URL = 'http://127.0.0.1:8000/api/courses/';
 
@@ -126,13 +129,22 @@ const Courses = () => {
                 <DashboardIcon id="Dicon" />
                 <h2 id="txt">Courses </h2>
             </div>
+            <div style={{ display: 'flex', alignItems: 'center', marginBlock:'1rem' }}>
 
-            <form onSubmit={submitForm} class="addCourse">
-                <input type="text" name="title" value={course.title} onChange={handleChange} />
-                
-                <input type="file" name="content" onChange={handleFile} />
-                <input type="submit" />
-            </form>
+                <h3>Add Course</h3>&nbsp; &nbsp; <Button variant={'contained'} onClick={() => setIsHidden(!isHidden)}>
+                    {isHidden ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
+                </Button>
+            </div>
+            {
+                isHidden ? "" :
+                    <form onSubmit={submitForm} class="addCourse">
+                        <input type="text" name="title" value={course.title} onChange={handleChange} />
+                        <input type="file" class="custom-file-input" name="content" onChange={handleFile} />
+                        <Button variant="contained" type="submit">Add</Button>
+                        {/* 
+                <input type="submit" /> */}
+                    </form>
+            }
 
             <h2>This is your courses</h2>
             {isLoading && <p>Loading...</p>}

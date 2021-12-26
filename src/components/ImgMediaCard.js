@@ -12,7 +12,6 @@ export default function ImgMediaCard({ course, deleteOne }) {
         <Card sx={{ maxWidth: 150, padding: 2, margin: "5px 20px", height: 170 }} id="card">
             <CardMedia
                 component="img"
-                alt="green iguana"
                 height="60"
                 width="50"
                 image={Thumb}
