@@ -155,7 +155,7 @@ const Courses = () => {
                     courses.map((course) => {
                         return (
 
-                            <ImgMediaCard course={course} deleteOne={deleteOne} />
+                            <ImgMediaCard course={course} />
 
                         )
                     })
