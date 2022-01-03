@@ -9,6 +9,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from "react-router-dom";
 import Logout from '@mui/icons-material/Logout';
 
+
+
 function Sidebar({ setToken }) {
 
     const ITEMS = [{
@@ -46,18 +48,23 @@ function Sidebar({ setToken }) {
     return (
         <div className="Sidebar">
             <div className="SidebarList">
+           
                 {
+                    
                     ITEMS.map((el) => {
 
                         return (
+                            
+
                             <Link to={el.link}>
+                                
                                 <SideBarItem title={el.title} icon={el.icon} />
                             </Link>
                         )
                     }
                     )
                 }
-                <SideBarItem title={"Log out"} icon={<LogoutIcon />} onClick={logout} />
+               <p className="logout"> <SideBarItem title={"Log out"} icon={<LogoutIcon />} onClick={logout} /></p>
             </div>
         </div>
     )
