@@ -24,10 +24,7 @@ export default function ImgMediaCard({ course, deleteOne }) {
             <CardActions>
                 <Button size="small" onClick={() => deleteOne(course.id)}>delete</Button>
                 <Button size="small" onClick={() => window.open(course.content)}>open</Button>
-                {console.log(course.content)}
-
             </CardActions>
         </Card >
     );
 }
-  
