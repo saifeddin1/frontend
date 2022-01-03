@@ -39,7 +39,6 @@ const WelcomeScreen = ({ Loggeduser }) => {
                                 <div className='box1'>
                                 <p className='txt1'>{el.title}</p>
                                 </div>
-                                
                             </Link>
                         )
                     }
