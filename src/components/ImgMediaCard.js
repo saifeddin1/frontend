@@ -30,3 +30,4 @@ export default function ImgMediaCard({ course, deleteOne }) {
         </Card >
     );
 }
+  
