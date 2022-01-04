@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function ImgMediaCard({ object, deleteOne, thumb }) {
+export default function ImgMediaCard({ object, deleteOne, thumb, profile }) {
     return (
         <Card sx={{ maxWidth: 150, padding: 1, margin: "15px 20px", height: 170 }} id="card">
             <CardMedia
@@ -21,8 +21,9 @@ export default function ImgMediaCard({ object, deleteOne, thumb }) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" onClick={() => deleteOne(object?.id)}>delete</Button>
                 <Button size="small" onClick={() => window.open(object?.content)}>open</Button>
+
+                {profile?.role !== "student" && <Button size="small" onClick={() => deleteOne(object?.id)}>delete</Button>}
             </CardActions>
         </Card >
     );

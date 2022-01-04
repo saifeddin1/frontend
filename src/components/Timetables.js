@@ -10,14 +10,54 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 const Timetables = () => {
 
+
     const [timetable, setTimetable] = useState({ content: null, classe: null })
     const [timetables, setTiemtables] = useState()
+    const [classe, setClasse] = useState()
     const [token, setToken] = useState(JSON.parse(sessionStorage.getItem('token')));
     const [isHidden, setIsHidden] = useState(true)
-
+    const [classes, setClasses] = useState([])
     const BASE_URL = 'http://127.0.0.1:8000/api/timetables/';
+    const CLASSES_URL = 'http://127.0.0.1:8000/api/classes/'
+    const [user, setUser] = React.useState(JSON.parse(sessionStorage.getItem('user')));
 
-    const navigate = useNavigate();
+
+
+    const [profile, setProfile] = React.useState()
+
+    const PROFILE_BASE_URL = 'http://127.0.0.1:8000/api/profiles/';
+    const navigate = useNavigate()
+    const retrieveProfile = async () => {
+
+        try {
+            const res = await fetch(PROFILE_BASE_URL, {
+                headers: {
+                    'Authorization': `Token ${token}`
+                }
+            })
+            const data = await res.json()
+            let curr = data.filter(el => el.username === user?.username)[0]
+            setProfile(curr)
+
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+    React.useEffect(() => {
+
+        if (token) {
+            retrieveProfile();
+        } else {
+            return navigate("/login");
+        }
+
+
+    }, [])
+
+
+
 
     const retrieve = async () => {
 
@@ -43,6 +83,14 @@ const Timetables = () => {
     useEffect(() => {
         if (token) {
             retrieve();
+            console.log("proooooooooooofile", profile);
+            fetch(CLASSES_URL, {
+                headers: {
+                    'Authorization': `Token ${token}`
+                }
+            })
+                .then(res => res.json())
+                .then(data => { setClasses(data); console.log("classes", data); })
         } else {
             return navigate("/login");
         }
@@ -52,13 +100,14 @@ const Timetables = () => {
 
 
 
-    // function handleChange(evt) {
-    //     const value = evt.target.value;
-    //     setTimetable({
-    //         ...timetable,
-    //         title: value
-    //     });
-    // }
+    function handleChange(evt) {
+        const value = evt.target.value;
+        console.log(value);
+        setTimetable({
+            ...timetable,
+            classe: value
+        });
+    }
 
     function handleFile(evt) {
         const value = evt.target.files[0];
@@ -74,8 +123,12 @@ const Timetables = () => {
         e.preventDefault();
         // console.log(course);
         let data = new FormData();
-        // data.append('title', course.title)
+        let newClass = classes.filter(el => el.name === timetable.classe)[0]
+        console.log("\n\n\n ", newClass.id, "\n\n\n");
+        data.append('classe', `http://127.0.0.1:8000/api/classes/${newClass?.id}/`)
         data.append('content', timetable.content)
+        // console.log("\n\n\n ", timetable, "\n\n\n");
+
 
         fetch(BASE_URL,
             {
@@ -95,8 +148,19 @@ const Timetables = () => {
     }
 
 
+    const getOneClass = (url) => {
+        fetch(url, {
+            headers: {
+                'Authorization': `Token ${token}`
+            }
+        })
+            .then(res => res.json())
+            .then(result => { return result })
 
+    }
 
+    // let newClass = classes.filter(el => el.name === timetable.classe)
+    // console.log("\n new class \n", newClass);
     const deleteOne = (key) => {
         fetch(BASE_URL + key,
             {
@@ -123,16 +187,31 @@ const Timetables = () => {
                 <DashboardIcon id="Dicon" />
                 <h2 id="txt">Timetables </h2><br />
             </div>
+            {profile?.role === "admin" &&
+                <div style={{ display: 'flex', alignItems: 'center', marginBlock: '1rem' }}>
 
-            <div style={{ display: 'flex', alignItems: 'center', marginBlock: '1rem' }}>
-
-                <h3>Add Timetable</h3>&nbsp; &nbsp; <Button variant={'contained'} onClick={() => setIsHidden(!isHidden)}>
-                    {isHidden ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
-                </Button>
-            </div>
+                    <h3>Add Timetable</h3>&nbsp; &nbsp; <Button variant={'contained'} onClick={() => setIsHidden(!isHidden)}>
+                        {isHidden ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
+                    </Button>
+                </div>
+            }
             {
                 isHidden ? "" :
                     <form onSubmit={submitForm} class="addCourse">
+                        <select onChange={handleChange}>
+                            <option>
+                                -----------------
+                            </option>
+                            {classes?.map((el, index) => {
+
+                                return (
+                                    <option key={index} value={el.name}>
+                                        {el.name}
+                                    </option>
+                                )
+                            })}
+                        </select>
+
                         <input type="file" accept="application/pdf" class="custom-file-input" name="content" onChange={handleFile} />
                         <Button variant="contained" type="submit">Add</Button>
                         {/* 
@@ -145,14 +224,20 @@ const Timetables = () => {
             <section class="cards-wrapper" >
                 {
                     timetables?.length > 0 &&
-                    timetables.map((timetable) => {
+                    timetables.map((timetable, index) => {
                         return (
-                            <ImgMediaCard thumb={Thumb} object={timetable} deleteOne={deleteOne} />
+                            <ImgMediaCard key={index}
+                                thumb={Thumb}
+                                object={timetable}
+                                deleteOne={deleteOne}
+                                profile={profile}
+
+                            />
                         )
                     })
                 }
             </section>
-        </div>
+        </div >
 
     )
 }

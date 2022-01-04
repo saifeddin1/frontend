@@ -1,5 +1,4 @@
 import React from 'react'
-import { HomeData } from './HomeData';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Link } from "react-router-dom";
 import ClassIcon from '@mui/icons-material/Class';
@@ -7,7 +6,7 @@ import EventNoteIcon from '@mui/icons-material/EventNote';
 
 const WelcomeScreen = ({ Loggeduser }) => {
     const ITEMS = [{
-    
+
         title: "Cours",
         icon: <ClassIcon />,
         link: "/courses",
@@ -31,19 +30,19 @@ const WelcomeScreen = ({ Loggeduser }) => {
             {
 
                 <div className='box'>
-                     {
-                    ITEMS.map((el) => {
+                    {
+                        ITEMS.map((el) => {
 
-                        return (
-                            <Link to={el.link}>
-                                <div className='box1'>
-                                <p className='txt1'>{el.title}</p>
-                                </div>
-                            </Link>
+                            return (
+                                <Link to={el.link}>
+                                    <div className='box1'>
+                                        <p className='txt1'>{el.title}</p>
+                                    </div>
+                                </Link>
+                            )
+                        }
                         )
                     }
-                    )
-                }
                 </div>
             }
 

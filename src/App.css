@@ -58,7 +58,7 @@
 
 }
 
-.logout{
+.logout {
     margin-top: 170px;
 }
 
@@ -96,17 +96,26 @@
 .box {
     width: 100%;
     height: auto;
-    margin: 0 auto;
+    /* margin: 0 auto; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .box1 {
-    width: 300px;
     height: 150px;
-    margin-left: 120px;
-    margin-top: 150px;
+
     border-radius: 20px;
     background-color: #CCCCFF;
-    float: left;
+    display: flex;
+    margin-block: 1rem;
+    justify-content: center;
+}
+
+
+
+.box a {
+    text-decoration: none;
 }
 
 .txt1 {
@@ -120,10 +129,12 @@
     margin-top: 50px;
     margin-left: 20px;
 }
+
 #Dicon {
     margin-top: 50px;
     margin-left: 40px;
 }
+
 /* 
 
 .box {
@@ -156,10 +167,21 @@ form.addCourse {
     justify-content: center;
 }
 
+form.addCourse select {
+    outline: unset;
+    padding: 0.4rem;
+    border: none;
+    border-radius: 10px;
+}
 
-form.addCourse input[type=text] {
-    width: 200px;
+
+input[type=text] {
+    /* width: 200px; */
     padding: 10px;
+}
+
+label {
+    margin-block: .5rem;
 }
 
 form.addCourse input {
@@ -232,6 +254,7 @@ form .form-inner .form-group {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 200px;
+    text-align: center;
 }
 
 .cards-wrapper {
