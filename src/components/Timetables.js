@@ -1,50 +1,157 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import "../App.css";
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
 import ImgMediaCard from './ImgMediaCard';
-import Thumb from './course-thumb.png'
-import { HomeData } from './HomeData';
+import Thumb from '../timetable.png'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 const Timetables = () => {
+
+    const [timetable, setTimetable] = useState({ content: null, classe: null })
+    const [timetables, setTiemtables] = useState()
+    const [token, setToken] = useState(JSON.parse(sessionStorage.getItem('token')));
+    const [isHidden, setIsHidden] = useState(true)
+
+    const BASE_URL = 'http://127.0.0.1:8000/api/timetables/';
+
+    const navigate = useNavigate();
+
+    const retrieve = async () => {
+
+        try {
+            const res = await fetch(BASE_URL, {
+                headers: {
+                    'Authorization': `Token ${token}`
+                }
+            })
+            const data = await res.json()
+
+            console.log("Data : ", data);
+            console.log("Token : ", token);
+            data && setTiemtables(data);
+            // console.log("Courses : ", timetables);
+            // setIsLoading(false)
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        if (token) {
+            retrieve();
+        } else {
+            return navigate("/login");
+        }
+
+
+    }, [])
+
+
+
+    // function handleChange(evt) {
+    //     const value = evt.target.value;
+    //     setTimetable({
+    //         ...timetable,
+    //         title: value
+    //     });
+    // }
+
+    function handleFile(evt) {
+        const value = evt.target.files[0];
+        setTimetable({
+            ...timetable,
+            content: value
+        });
+    }
+
+    const submitForm = (e) => {
+        e.stopPropagation();
+
+        e.preventDefault();
+        // console.log(course);
+        let data = new FormData();
+        // data.append('title', course.title)
+        data.append('content', timetable.content)
+
+        fetch(BASE_URL,
+            {
+                method: "POST",
+                body: data,
+                headers: {
+                    'Authorization': ` ${token}`
+                }
+            }
+        )
+
+            .then(res => res.json())
+            .then(result => { console.clear(); console.log(result); retrieve(); })
+            .catch(err => console.log(err))
+
+
+    }
+
+
+
+
+    const deleteOne = (key) => {
+        fetch(BASE_URL + key,
+            {
+                method: "DELETE",
+
+                headers: {
+                    'Authorization': `Token ${token}`
+                }
+            }
+        )
+
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
+
+        setTiemtables(timetables.filter((timetable) => timetable.id !== key))
+
+    }
+
+
     return (
         <div className="data timetables">
-
             <div className="page-header">
                 <DashboardIcon id="Dicon" />
                 <h2 id="txt">Timetables </h2><br />
-
-
             </div>
 
+            <div style={{ display: 'flex', alignItems: 'center', marginBlock: '1rem' }}>
+
+                <h3>Add Timetable</h3>&nbsp; &nbsp; <Button variant={'contained'} onClick={() => setIsHidden(!isHidden)}>
+                    {isHidden ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
+                </Button>
+            </div>
+            {
+                isHidden ? "" :
+                    <form onSubmit={submitForm} class="addCourse">
+                        <input type="file" accept="application/pdf" class="custom-file-input" name="content" onChange={handleFile} />
+                        <Button variant="contained" type="submit">Add</Button>
+                        {/* 
+<input type="submit" /> */}
+                    </form>
+            }
+
+
             <h2>This is your timetables</h2>
-            <Card sx={{ maxWidth: 150 }} style={{ marginTop: '50px' }}>
-                <CardMedia
-
-                    component="img"
-                    height="140"
-                    image={Thumb}
-
-                    alt="Emploie"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="small" onClick={() => window.open("./course-thumb.png", "_blank")} >open</Button>
-                    <Button size="small">Delete</Button>
-                </CardActions>
-            </Card>
+            <section class="cards-wrapper" >
+                {
+                    timetables?.length > 0 &&
+                    timetables.map((timetable) => {
+                        return (
+                            <ImgMediaCard thumb={Thumb} object={timetable} deleteOne={deleteOne} />
+                        )
+                    })
+                }
+            </section>
         </div>
 
     )

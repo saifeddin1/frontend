@@ -5,25 +5,24 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Thumb from './course-thumb.png'
 
-export default function ImgMediaCard({ course, deleteOne }) {
+export default function ImgMediaCard({ object, deleteOne, thumb }) {
     return (
         <Card sx={{ maxWidth: 150, padding: 1, margin: "15px 20px", height: 170 }} id="card">
             <CardMedia
                 component="img"
                 height="60"
                 width="50"
-                image={Thumb}
+                image={thumb}
             />
             <CardContent >
                 <Typography gutterBottom component="p" id="courseTitle" >
-                    {course.title}
+                    {object?.title}
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" onClick={() => deleteOne(course.id)}>delete</Button>
-                <Button size="small" onClick={() => window.open(course.content)}>open</Button>
+                <Button size="small" onClick={() => deleteOne(object?.id)}>delete</Button>
+                <Button size="small" onClick={() => window.open(object?.content)}>open</Button>
             </CardActions>
         </Card >
     );

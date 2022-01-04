@@ -7,6 +7,7 @@ import { display } from '@mui/system';
 import { Button, IconButton, Input } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Thumb from '../course-thumb.png'
 
 
 
@@ -155,7 +156,7 @@ const Courses = () => {
                     courses.map((course) => {
                         return (
 
-                            <ImgMediaCard course={course} deleteOne={deleteOne} />
+                            <ImgMediaCard thumb={Thumb} object={course} deleteOne={deleteOne} />
 
                         )
                     })
