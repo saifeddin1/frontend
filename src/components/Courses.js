@@ -12,12 +12,14 @@ import Thumb from '../course-thumb.png'
 
 const Courses = () => {
 
+    const CLASSES_URL = 'http://127.0.0.1:8000/api/classes/'
 
     const [token, setToken] = useState(JSON.parse(sessionStorage.getItem('token')));
     const [user, setUser] = React.useState(JSON.parse(sessionStorage.getItem('user')));
     const [profile, setProfile] = React.useState()
+    const [classes, setClasses] = useState([])
 
-    const [course, setCourse] = useState({ content: null, title: "" })
+    const [course, setCourse] = useState({ content: null, title: "", classe: null })
     const [courses, setCourses] = useState()
     const [isHidden, setIsHidden] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
@@ -46,6 +48,13 @@ const Courses = () => {
 
         if (token) {
             retrieveProfile();
+            fetch(CLASSES_URL, {
+                headers: {
+                    'Authorization': `Token ${token}`
+                }
+            })
+                .then(res => res.json())
+                .then(data => { setClasses(data); console.log("classes", data); })
         } else {
             return navigate("/login");
         }
@@ -92,10 +101,11 @@ const Courses = () => {
 
 
     function handleChange(evt) {
-        const value = evt.target.value;
+        // const value = evt.target.value;
         setCourse({
             ...course,
-            title: value
+            // title: value
+            [evt.target.name]: evt.target.value
         });
     }
 
@@ -115,6 +125,9 @@ const Courses = () => {
         let data = new FormData();
         data.append('title', course.title)
         data.append('content', course.content)
+        let newClass = classes.filter(el => el.name === course.classe)[0]
+        data.append('classe', `http://127.0.0.1:8000/api/classes/${newClass?.id}/`)
+
 
         fetch(BASE_URL,
             {
@@ -175,6 +188,19 @@ const Courses = () => {
 
                     <form onSubmit={submitForm} class="addCourse">
                         <input type="text" name="title" value={course.title} onChange={handleChange} />
+                        <select onChange={handleChange} name="classe">
+                            <option>
+                                -----------------
+                            </option>
+                            {classes?.map((el, index) => {
+
+                                return (
+                                    <option key={index} value={el.name}>
+                                        {el.name}
+                                    </option>
+                                )
+                            })}
+                        </select>
                         <input type="file" accept="application/pdf" class="custom-file-input" name="content" onChange={handleFile} />
                         <Button variant="contained" type="submit">Add</Button>
                         {/* 
@@ -189,11 +215,15 @@ const Courses = () => {
                     courses?.length > 0 &&
 
                     courses.map((course) => {
-                        return (
+                        if ((course?.course_classe === profile?.profile_classe) || (profile?.role === "admin" || profile?.role === "teacher")) {
+                            return (
+                                <ImgMediaCard thumb={Thumb} profile={profile} object={course} deleteOne={deleteOne} />
+                            )
+                        }
 
-                            <ImgMediaCard thumb={Thumb} profile={profile} object={course} deleteOne={deleteOne} />
 
-                        )
+
+
                     })
 
                     // :

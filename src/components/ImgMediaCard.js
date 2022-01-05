@@ -23,7 +23,7 @@ export default function ImgMediaCard({ object, deleteOne, thumb, profile }) {
             <CardActions>
                 <Button size="small" onClick={() => window.open(object?.content)}>open</Button>
 
-                {profile?.role !== "student" && <Button size="small" onClick={() => deleteOne(object?.id)}>delete</Button>}
+                {profile?.role === "admin" && <Button size="small" onClick={() => deleteOne(object?.id)}>delete</Button>}
             </CardActions>
         </Card >
     );

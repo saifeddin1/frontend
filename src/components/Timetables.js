@@ -124,7 +124,6 @@ const Timetables = () => {
         // console.log(course);
         let data = new FormData();
         let newClass = classes.filter(el => el.name === timetable.classe)[0]
-        console.log("\n\n\n ", newClass.id, "\n\n\n");
         data.append('classe', `http://127.0.0.1:8000/api/classes/${newClass?.id}/`)
         data.append('content', timetable.content)
         // console.log("\n\n\n ", timetable, "\n\n\n");
@@ -225,6 +224,7 @@ const Timetables = () => {
                 {
                     timetables?.length > 0 &&
                     timetables.map((timetable, index) => {
+                        
                         return (
                             <ImgMediaCard key={index}
                                 thumb={Thumb}
