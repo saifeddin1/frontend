@@ -190,7 +190,7 @@ const Courses = () => {
                         <input type="text" name="title" value={course.title} onChange={handleChange} />
                         <select onChange={handleChange} name="classe">
                             <option>
-                                ------------------
+                                ----------------
                             </option>
                             {classes?.map((el, index) => {
 
